@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" th:src="@{/js/validation.js}"></script>
+    <link href="../static/css/form.css" th:href="@{/css/form.css}" rel="stylesheet"/>
+    <title>Update horse</title>
+</head>
+<body>
+<h1>Редактировать данные о лошади</h1>
+
+<div class="container">
+    <form name="validation" th:action="@{/horse-update}" th:object="${horse}" method="post"
+          onsubmit="return validateForm()">
+
+        <label>ID:
+            <br>
+            <input readonly type="number" th:field="*{id}" placeholder="ID">
+            <br>
+        </label>
+
+        <label>Масть:
+            <br>
+            <input type="text" th:field="*{type}" name="type" placeholder="type">
+            <br>
+        </label>
+
+        <label>Возраст:
+            <br>
+            <input type="text" th:field="*{age}" name="age" required placeholder="age">
+            <br>
+        </label>
+
+        <label>Цена:
+            <br>
+            <input type="text" th:field="*{price}" name="price" required placeholder="price">
+            <br>
+        </label>
+
+        <input type="submit" value="Обновить">
+    </form>
+</div>
+</body>
+</html>
