@@ -26,5 +26,5 @@ public class Horse implements Serializable {
     private Integer age;
 
     @Column(name = "price")
-    private Double price;
+    private Float price;
 }
