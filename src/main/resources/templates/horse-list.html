@@ -10,32 +10,76 @@
     <h2>Лошади</h2>
 </div>
 
-<p><a href="/horse-create">Добавить лошадь</a></p>
+<p><a href="/horses/horse-create">Добавить лошадь</a></p>
 
-<div th:switch="${horses}">
+<div th:switch="${horseList}">
     <h2 th:case="null">No horses found!</h2>
     <div th:case="*">
         <table id="customers">
             <thead>
             <tr>
-                <th>№</th>
-                <th>Масть</th>
-                <th>Возраст</th>
-                <th>Цена</th>
+                <th>
+                    <a th:href="@{'/horses/page/' + ${currentPage} + '?sortField=id&sortDir=' + ${reverseSortDir}}">№</a>
+                </th>
+                <th>
+                    <a th:href="@{'/horses/page/' + ${currentPage} + '?sortField=type&sortDir=' + ${reverseSortDir}}">
+                        Масть</a>
+                </th>
+                <th>
+                    <a th:href="@{'/horses/page/' + ${currentPage} + '?sortField=age&sortDir=' + ${reverseSortDir}}">
+                        Возраст</a>
+                </th>
+                <th>
+                    <a th:href="@{'/horses/page/' + ${currentPage} + '?sortField=price&sortDir=' + ${reverseSortDir}}">
+                        Цена</a>
+                </th>
                 <th colspan="2"></th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="horse : ${horses}">
+            <tr th:each="horse : ${horseList}">
                 <td th:text="${horse.id}"></td>
                 <td th:text="${horse.type}"></td>
                 <td th:text="${horse.age}"></td>
                 <td th:text="${horse.price}"></td>
-                <td><a th:href="@{horse-update/{id}(id=${horse.id})}">Редактировать</a></td>
-                <td><a th:href="@{horse-delete/{id}(id=${horse.id})}">Удалить</a></td>
+                <td>
+                    <a th:href="@{/horses/horse-update/{id}/{page}/{sortField}/{sortDir}(id=${horse.id},page=${currentPage},sortField=${sortField},sortDir=${sortDir})}">Редактировать</a>
+                </td>
+                <td><a th:href="@{/horses/horse-delete/{id}/{page}/{sortField}/{sortDir}(id=${horse.id},page=${currentPage},sortField=${sortField},sortDir=${sortDir})}">Удалить</a></td>
             </tr>
             </tbody>
         </table>
+        <br>
+
+        <a class="page-link" th:if="${currentPage > 1}"
+           th:href="@{'/horses/page/'+ ${1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">
+            Первая</a>
+        <span th:unless="${currentPage > 1}">Первая</span>
+
+        <a th:if="${currentPage > 1}"
+           th:href="@{'/horses/page/' + ${currentPage - 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">
+            Предыдущая</a>
+        <span th:unless="${currentPage > 1}">Предыдущая</span>
+
+        <span th:each="i : ${#numbers.sequence(1, totalPages)}">
+        <a th:if="${i != currentPage}"
+           th:href="@{'/horses/page/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]
+        </a>
+        <span th:unless="${i != currentPage}">[[${i}]]</span>
+        </span>
+
+        <a th:if="${currentPage < totalPages}"
+           th:href="@{'/horses/page/' + ${currentPage + 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">
+            Следующая</a>
+        <span th:unless="${currentPage < totalPages}">Следующая</span>
+
+        <a th:if="${currentPage < totalPages}"
+           th:href="@{'/horses/page/' + ${totalPages} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">
+            Последняя</a>
+        <span th:unless="${currentPage < totalPages}">Последняя</span>
+        <p>
+            Всего строк [[${totalItems}]] : Страница [[${currentPage}]] из [[${totalPages}]]
+        </p>
     </div>
 </div>
 </body>

@@ -1,38 +1,20 @@
 package com.example.horses.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import com.example.horses.repository.dao.HorseRepository;
 import com.example.horses.repository.entity.Horse;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
-@Service
-public class HorseService implements HorseServiceImpl {
-    private final HorseRepository horseRepository;
+public interface HorseService {
+    Horse findById(Integer id);
 
-    @Autowired
-    public HorseService(HorseRepository horseRepository) {
-        this.horseRepository = horseRepository;
-    }
+    List<Horse> findAll();
 
-    @Override
-    public Horse findById(Integer id) {
-        return horseRepository.getReferenceById(id);
-    }
+    Horse saveHorse(Horse horse);
 
-    @Override
-    public List<Horse> findAll() {
-        return horseRepository.findAll();
-    }
+    void delete(Integer id);
 
-    @Override
-    public Horse saveHorse(Horse horse) {
-        return horseRepository.save(horse);
-    }
+    Page<Horse> horsesByPage(int pageNum, String sortField, String sortDir);
 
-    @Override
-    public void delete(Integer id) {
-        horseRepository.deleteById(id);
-    }
 }

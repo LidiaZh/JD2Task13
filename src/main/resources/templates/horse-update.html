@@ -10,8 +10,12 @@
 <h1>Редактировать данные о лошади</h1>
 
 <div class="container">
-    <form name="validation" th:action="@{/horse-update}" th:object="${horse}" method="post"
+    <form name="validation" th:action="@{/horses/horse-update/}" th:object="${horse}" method="post"
           onsubmit="return validateForm()">
+
+        <input type="hidden" name="pageNum" th:value="${pageNum}">
+        <input type="hidden" name="sortField" th:value="${sortField}">
+        <input type="hidden" name="sortDir" th:value="${sortDir}">
 
         <label>ID:
             <br>

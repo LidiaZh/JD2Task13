@@ -11,7 +11,7 @@
 <h1>Добавить лошадь</h1>
 
 <div class="container">
-    <form name="validation" th:action="@{/horse-create}" th:object="${horse}" method="post"
+    <form name="validation" th:action="@{/horses/horse-create}" th:object="${horse}" method="post"
           onsubmit="return validateForm()">
 
         <label>Масть:
